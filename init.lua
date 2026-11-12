@@ -19,6 +19,16 @@ vim.opt.incsearch = true
 -- Clipboard
 vim.opt.clipboard = "unnamedplus"
 
+-- Auto Save
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+  pattern = "*",
+  callback = function()
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" then
+      vim.cmd("silent! write")
+    end
+  end,
+})
+
 -- Mouse Support
 vim.opt.mouse = "a"
 -- vim.opt.guicursor = "n-v-c-sm:ver25,i-ci-ve:ver25,r-cr:hor20,o:hor50"
